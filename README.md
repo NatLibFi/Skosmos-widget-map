@@ -1,1 +1,1 @@
-# Skosmos-widget-map
+# Skosmos plugin for displaying a map on concept pages
