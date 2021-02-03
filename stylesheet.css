@@ -1,0 +1,60 @@
+/*
+ * Stylesheet for the widget. Designed for finto.fi. *
+ *   */
+.concept-widget {
+    border-top: 2px solid #394554;
+}
+
+.concept-widget > .panel, .concept-widget #map {
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+}
+
+.concept-widget > .panel > #headingMap {
+    background-color: #fff;
+}
+
+#collapseMap > .panel-body {
+    padding: 0;
+    border-top: 0;
+}
+
+#map {
+    border: 0;
+    border-radius: 0;
+    height: 320px;
+}
+
+#map .leaflet-popup-content {
+    margin: 10px 19px;
+    text-align: center;
+}
+
+#map .leaflet-popup-content .map-popup-coordinates {
+    white-space: nowrap;
+    min-width: max-content;
+}
+
+#collapseMap > .panel-body > .btn:hover, #collapseMap > .panel-body > .btn:active, #collapseMap > .panel-body > .btn:focus {
+    background-color: #fff;
+}
+
+#headingMap {
+    font-size: 16px;
+    border-bottom: 1px solid #bbb;
+}
+
+#headingMap > a > .glyphicon {
+    color: #83CFC8;
+    top: 3px;
+}
+
+#headingMap > a + a {
+    margin-left: 15px;
+}
+
+#headingMap .map-caption-vocabulary {
+    float: right;
+    color: gray;
+}

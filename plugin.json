@@ -1,0 +1,6 @@
+{
+    "js": ["widget.js", "node_modules/leaflet/dist/leaflet.js"],
+    "callback": ["mapWidget"],
+    "css": ["node_modules/leaflet/dist/leaflet.css", "stylesheet.css"],
+    "templates": ["template.html"]
+}
