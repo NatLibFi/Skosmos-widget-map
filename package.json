@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "leaflet": "git+https://github.com/Leaflet/Leaflet.git#v1.7.1"
+    "leaflet": "^1.7.1"
   }
 }

@@ -4,4 +4,4 @@ This plugin will show a map with a marker centered at concept coordinates (deter
 # Installation
 1. git clone to Skosmos plugins directory
 
-2. run `npm ci` in the cloned directory
+2. run `npm ci` (or `npm install` if npm version is below v5.7.1) in the cloned directory
