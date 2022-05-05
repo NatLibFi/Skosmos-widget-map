@@ -1,12 +1,12 @@
 <div class="concept-widget panel-group" id="mapAccordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingMap">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">
                 {{mapCaption}}
             </button>
             <span class="map-caption-vocabulary versal">{{mapVocabulary}}</span>
         </div>
-        <div id="collapseMap" class="panel-collapse collapse{{#if opened}} in{{/if}}" role="tabpanel" aria-labelledby="headingMap">
+        <div id="collapseMap" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingMap">
             <div class="panel-body">
                 <div id="map" class="panel" role="tabpanel" aria-labelledby="headingMapWidget"></div>
             </div>
