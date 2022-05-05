@@ -56,7 +56,8 @@
 }
 
 #headingMap .map-caption-vocabulary {
-    float: right;
+    position: absolute;
+    right: 45px;
     color: gray;
 }
 
