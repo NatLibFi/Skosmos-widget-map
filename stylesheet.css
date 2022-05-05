@@ -58,3 +58,13 @@
     float: right;
     color: gray;
 }
+
+#headingMap .accordion-button {
+    color: var(--medium-color);
+    background-color: var(--white);
+    padding-top: 0.2rem;
+    padding-right: 1rem;
+    padding-bottom: 0.2rem;
+    padding-left: 1rem;
+    font-size: 14px;
+}
