@@ -3,6 +3,7 @@
  *   */
 .concept-widget {
     border-top: 2px solid #394554;
+    margin-bottom: 20px;
 }
 
 .concept-widget > .panel, .concept-widget #map {
@@ -55,6 +56,17 @@
 }
 
 #headingMap .map-caption-vocabulary {
-    float: right;
+    position: absolute;
+    right: 45px;
     color: gray;
+}
+
+#headingMap .accordion-button {
+    color: var(--medium-color);
+    background-color: var(--white);
+    padding-top: 0.5rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    font-size: 1rem;
 }

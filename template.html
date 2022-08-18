@@ -1,16 +1,14 @@
 <div class="concept-widget panel-group" id="mapAccordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingMap">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#mapAccordion" href="#collapseMap" aria-expanded="false" aria-controls="collapseMap">
-                <span class="glyphicon glyphicon-chevron-{{#if opened}}up{{else}}down{{/if}}" aria-hidden="true"></span></a>
-            <a class="collapsed versal" role="button" data-toggle="collapse" data-parent="#mapAccordion" href="#collapseMap" aria-expanded="false" aria-controls="collapseMap">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">
                 {{mapCaption}}
-            </a>
-            <span class="map-caption-vocabulary versal">{{mapVocabulary}}</span>
+                <span class="map-caption-vocabulary float-end versal">{{mapVocabulary}}</span>
+            </button>
         </div>
-        <div id="collapseMap" class="panel-collapse collapse{{#if opened}} in{{/if}}" role="tabpanel" aria-labelledby="headingMap">
+        <div id="collapseMap" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingMap">
             <div class="panel-body">
-                <div id="map" class="panel" role="tabpanel" aria-labelledby="headingMapWidget"></div>
+                <div id="map" class="panel position-sticky" role="tabpanel" aria-labelledby="headingMapWidget"></div>
             </div>
         </div>
     </div>
