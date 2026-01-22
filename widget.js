@@ -93,8 +93,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (data.pageType !== 'concept' || data.prefLabels === undefined || Object.keys(data["jsonLd"]).length === 0) {
             return;
         }
-        const uri_space = SKOSMOS.uriSpace;
-        const jsonld_uri = data.uri.replace(uri_space, "ysopaikat:");
+        const skosmos_uri_space = SKOSMOS.uriSpace;
+        const context = data["jsonLd"]["@context"];
+        const json_ld_uri_space = Object.keys(context).find(key => context[key] === SKOSMOS.uriSpace);
+        const jsonld_uri = data.uri.replace(skosmos_uri_space, json_ld_uri_space + ":");
         const graph = data["jsonLd"]["graph"];
         var WGS84 = {
             "lat": "http://www.w3.org/2003/01/geo/wgs84_pos#lat",
@@ -102,10 +104,12 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         for (const concept of graph) {
             if (concept.uri === jsonld_uri) {
-                var latitudeStr = concept[WGS84.lat];
-                var longitudeStr = concept[WGS84.long];
-                MAP.coordinates = [parseFloat(latitudeStr), parseFloat(longitudeStr)];
-                MAP.coordinatesStr = [latitudeStr, longitudeStr];
+                if (concept[WGS84.lat] && concept[WGS84.long]) {
+                    var latitudeStr = concept[WGS84.lat];
+                    var longitudeStr = concept[WGS84.long];
+                    MAP.coordinates = [parseFloat(latitudeStr), parseFloat(longitudeStr)];
+                    MAP.coordinatesStr = [latitudeStr, longitudeStr];
+                }
             }
         }
         if (MAP.coordinates.length == 0) {
