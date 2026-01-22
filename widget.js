@@ -93,36 +93,27 @@ document.addEventListener('DOMContentLoaded', function() {
         if (data.pageType !== 'concept' || data.prefLabels === undefined || Object.keys(data["jsonLd"]).length === 0) {
             return;
         }
-        var wgs84_prefix = "http://www.w3.org/2003/01/geo/wgs84_pos#";
-        var jsonld_uri = data.uri;
-        Object.entries(data["jsonLd"]["@context"]).forEach(([key, value]) => {
-            if (data.uri.startsWith(value)) {
-                console.log(key + ": " +value);
-                jsonld_uri = key + ":" + data.uri.substring(value.length);
-            }
-            if (value === wgs84_prefix) {
-                wgs84_prefix = key + ":";
-            }
-        });
+        const uri_space = SKOSMOS.uriSpace;
+        const jsonld_uri = data.uri.replace(uri_space, "ysopaikat:");
+        const graph = data["jsonLd"]["graph"];
         var WGS84 = {
-            "lat": wgs84_prefix + "lat",
-            "long": wgs84_prefix + "long"
+            "lat": "http://www.w3.org/2003/01/geo/wgs84_pos#lat",
+            "long": "http://www.w3.org/2003/01/geo/wgs84_pos#long"
         };
-        var correct_jsonld_objects = []; // only a single value is expected
-        correct_jsonld_objects = data["jsonLd"].graph.filter(function (obj) {
-            return obj.uri === jsonld_uri && obj[WGS84.lat] && obj[WGS84.long];
-        });
-        if (correct_jsonld_objects.length == 0) {
+        for (const concept of graph) {
+            if (concept.uri === jsonld_uri) {
+                var latitudeStr = concept[WGS84.lat];
+                var longitudeStr = concept[WGS84.long];
+                MAP.coordinates = [parseFloat(latitudeStr), parseFloat(longitudeStr)];
+                MAP.coordinatesStr = [latitudeStr, longitudeStr];
+            }
+        }
+        if (MAP.coordinates.length == 0) {
             return;
         }
-        var jsonld_object = correct_jsonld_objects[0];
-        var latitudeStr = jsonld_object[WGS84.lat];
-        var longitudeStr = jsonld_object[WGS84.long];
 
         // map variables
         MAP.mapObject = null;
-        MAP.coordinates = [parseFloat(latitudeStr), parseFloat(longitudeStr)];
-        MAP.coordinatesStr = [latitudeStr, longitudeStr];
         MAP.preferred_label = data.prefLabels[0]["label"];
 
         // render widget
