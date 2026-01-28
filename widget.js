@@ -1,3 +1,5 @@
+/* global Vue, L */
+
 const MAP =  {
     vueApp: null,
     createVueApp: function() {
@@ -5,7 +7,7 @@ const MAP =  {
             data() {
                 return {
                     mapCaption: MAP.getTranslation("mapCaption"),
-                    mapVocabulary: SKOSMOS.vocShortName
+                    mapVocabulary: window.SKOSMOS.vocShortName
                 }
             },
             template: `
@@ -30,7 +32,7 @@ const MAP =  {
     coordinates: [],
     coordinatesStr: [],
     getTranslation: function (key) {
-        var getLang = SKOSMOS.lang;
+        var getLang = window.SKOSMOS.lang;
         if (getLang !== "fi" && getLang !== "sv") {
             getLang = "en";
         }
@@ -93,26 +95,29 @@ document.addEventListener('DOMContentLoaded', function() {
         if (data.pageType !== 'concept' || data.prefLabels === undefined || Object.keys(data["jsonLd"]).length === 0) {
             return;
         }
-        const skosmos_uri_space = SKOSMOS.uriSpace;
+        const skosmosUriSpace = window.SKOSMOS.uriSpace;
         const context = data["jsonLd"]["@context"];
-        const json_ld_uri_space = Object.keys(context).find(key => context[key] === SKOSMOS.uriSpace);
-        const jsonld_uri = data.uri.replace(skosmos_uri_space, json_ld_uri_space + ":");
+
+        // Use the NS prefix defined in the json-ld object for the current namespace for the concept page
+        const jsonLdUriSpace = Object.keys(context).find(key => context[key] === window.SKOSMOS.uriSpace);
+        const jsonLdUri = data.uri.replace(skosmosUriSpace, jsonLdUriSpace + ":");
+
         const graph = data["jsonLd"]["graph"];
-        var WGS84 = {
+        const WGS84 = {
             "lat": "http://www.w3.org/2003/01/geo/wgs84_pos#lat",
             "long": "http://www.w3.org/2003/01/geo/wgs84_pos#long"
         };
         for (const concept of graph) {
-            if (concept.uri === jsonld_uri) {
+            if (concept.uri === jsonLdUri) {
                 if (concept[WGS84.lat] && concept[WGS84.long]) {
-                    var latitudeStr = concept[WGS84.lat];
-                    var longitudeStr = concept[WGS84.long];
+                    const latitudeStr = concept[WGS84.lat];
+                    const longitudeStr = concept[WGS84.long];
                     MAP.coordinates = [parseFloat(latitudeStr), parseFloat(longitudeStr)];
                     MAP.coordinatesStr = [latitudeStr, longitudeStr];
                 }
             }
         }
-        if (MAP.coordinates.length == 0) {
+        if (MAP.coordinates.length === 0) {
             return;
         }
 
