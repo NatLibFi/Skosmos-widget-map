@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 2) and there is a prefLabel
         // 3) and the json-ld data can be found
         // 4) and the latitude and longitude are defined
-        if (data.pageType !== 'concept' || data.prefLabels === undefined || Object.keys(data["jsonLd"]).length === 0) {
+        if (data.pageType !== 'concept' || data.prefLabels === undefined || Object.keys(data["jsonLd"]).length === 0) {
             return;
         }
         const skosmosUriSpace = window.SKOSMOS.uriSpace;
