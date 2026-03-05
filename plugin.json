@@ -1,5 +1,5 @@
 {
-    "js": ["widget.js", "node_modules/leaflet/dist/leaflet.js"],
+    "js": ["widget.js", "node_modules/leaflet/dist/leaflet.js", "zoom_levels.js"],
     "callback": ["mapWidget"],
     "css": ["node_modules/leaflet/dist/leaflet.css", "stylesheet.css"]
 }

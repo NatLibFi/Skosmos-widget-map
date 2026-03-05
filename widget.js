@@ -11,11 +11,11 @@ const MAP = {
         }
       },
       template: `
-                <div class="concept-widget panel-group" id="mapAccordion" role="tablist" aria-multiselectable="true">
+                <div class="panel-group" id="mapAccordion" role="tablist" aria-multiselectable="true">
                   <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingMap">
                       <button class="accordion-button accordion" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">
-                        {{mapCaption}}
+                        <div>{{mapCaption}}</div>
                         <span class="map-caption-vocabulary float-end versal">{{mapVocabulary}}</span>
                       </button>
                     </div>
@@ -31,6 +31,7 @@ const MAP = {
   },
   coordinates: [],
   coordinatesStr: [],
+  zoomLevel: 10,
   getTranslation: function (key) {
     let getLang = window.SKOSMOS.lang
     if (getLang !== 'fi' && getLang !== 'sv') {
@@ -48,7 +49,7 @@ const MAP = {
     }
   },
   initialize: function () {
-    const mapObject = L.map('map').setView(MAP.coordinates, 10)
+    const mapObject = L.map('map').setView(MAP.coordinates, MAP.zoomLevel)
 
     mapObject.attributionControl.setPrefix('<a href="https://leafletjs.com" title="A JS library for interactive maps" target="_blank">Leaflet</a>')
 
@@ -101,15 +102,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const jsonLdUri = data.uri.replace(skosmosUriSpace, jsonLdUriSpace + ':')
 
     const graph = data.jsonLd.graph
+
     const WGS84 = {
       lat: 'http://www.w3.org/2003/01/geo/wgs84_pos#lat',
       long: 'http://www.w3.org/2003/01/geo/wgs84_pos#long'
     }
+    var placeType = null
+    const placeTypes = ['http://www.yso.fi/onto/yso-meta/mmlPlaceType',
+                        'http://www.yso.fi/onto/yso-meta/wikidataPlaceType']
     for (const concept of graph) {
       if (concept.uri === jsonLdUri) {
+        for (var ns of placeTypes) {
+          if (concept[ns]) {
+            placeType = concept[ns].uri
+          }
+        }
         if (concept[WGS84.lat] && concept[WGS84.long]) {
-          const latitudeStr = concept[WGS84.lat]
-          const longitudeStr = concept[WGS84.long]
+          var latitudeStr = concept[WGS84.lat]
+          var longitudeStr = concept[WGS84.long]
+          if ((typeof placeType !== 'undefined') ) {
+            if (MAP.zoomLevels[placeType]) {
+              MAP.zoomLevel = MAP.zoomLevels[placeType]
+            }
+          }
           MAP.coordinates = [parseFloat(latitudeStr), parseFloat(longitudeStr)]
           MAP.coordinatesStr = [latitudeStr, longitudeStr]
         }
