@@ -107,20 +107,20 @@ document.addEventListener('DOMContentLoaded', function () {
       lat: 'http://www.w3.org/2003/01/geo/wgs84_pos#lat',
       long: 'http://www.w3.org/2003/01/geo/wgs84_pos#long'
     }
-    var placeType = null
+    let placeType = null
     const placeTypes = ['http://www.yso.fi/onto/yso-meta/mmlPlaceType',
-                        'http://www.yso.fi/onto/yso-meta/wikidataPlaceType']
+      'http://www.yso.fi/onto/yso-meta/wikidataPlaceType']
     for (const concept of graph) {
       if (concept.uri === jsonLdUri) {
-        for (var ns of placeTypes) {
+        for (const ns of placeTypes) {
           if (concept[ns]) {
             placeType = concept[ns].uri
           }
         }
         if (concept[WGS84.lat] && concept[WGS84.long]) {
-          var latitudeStr = concept[WGS84.lat]
-          var longitudeStr = concept[WGS84.long]
-          if ((typeof placeType !== 'undefined') ) {
+          const latitudeStr = concept[WGS84.lat]
+          const longitudeStr = concept[WGS84.long]
+          if (typeof placeType !== 'undefined') {
             if (MAP.zoomLevels[placeType]) {
               MAP.zoomLevel = MAP.zoomLevels[placeType]
             }
@@ -132,6 +132,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if (MAP.coordinates.length === 0) {
       return
+    }
+    // For places with no type and more imprecise coordinates, reduce zoom level:
+    if (MAP.coordinates.length === 2 && placeType === null) {
+      const precisions = [MAP.coordinatesStr[0], MAP.coordinatesStr[1]]
+      let minPrecision = 5
+      for (const precision of precisions) {
+        const splitDecimals = precision.split('.')
+        if (typeof splitDecimals[1] === 'undefined') {
+          minPrecision = 0
+        } else {
+          const decimals = splitDecimals[1].length
+          if (decimals < minPrecision) {
+            minPrecision = decimals
+          }
+        }
+      }
+      if (minPrecision > 2) {
+        MAP.zoomLevel = 5
+      } else {
+        MAP.zoomLevel = 4
+      }
     }
 
     // map variables
