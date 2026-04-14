@@ -16,7 +16,6 @@ const MAP = {
                     <div class="panel-heading" role="tab" id="headingMap">
                       <button class="accordion-button accordion" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">
                         <div>{{mapCaption}}</div>
-                        <span class="map-caption-vocabulary float-end versal">{{mapVocabulary}}</span>
                       </button>
                     </div>
                     <div id="collapseMap" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingMap">
