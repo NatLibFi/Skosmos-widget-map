@@ -83,7 +83,6 @@ const MAP = {
   },
   remove: function () {
     if (this.vueApp) {
-      console.log("remove")
       this.vueApp.unmount()
       this.vueApp = null
     }
