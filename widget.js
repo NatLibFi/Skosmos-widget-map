@@ -80,6 +80,13 @@ const MAP = {
     this.vueApp.mount('#map-plugin')
 
     MAP.initialize()
+  },
+  remove: function () {
+    if (this.vueApp) {
+      console.log("remove")
+      this.vueApp.unmount()
+      this.vueApp = null
+    }
   }
 }
 
@@ -99,9 +106,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Use the NS prefix defined in the json-ld object for the current namespace for the concept page
     const jsonLdUriSpace = Object.keys(context).find(key => context[key] === window.SKOSMOS.uriSpace)
     const jsonLdUri = data.uri.replace(skosmosUriSpace, jsonLdUriSpace + ':')
-
+    // empty previous coordinates and zoom level in case that current place do not have them
+    MAP.coordinates = []
+    MAP.zoomLevel = 10
     const graph = data.jsonLd.graph
-
     const WGS84 = {
       lat: 'http://www.w3.org/2003/01/geo/wgs84_pos#lat',
       long: 'http://www.w3.org/2003/01/geo/wgs84_pos#long'
@@ -130,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
     if (MAP.coordinates.length === 0) {
+      MAP.remove()
       return
     }
     // For places with no type and more imprecise coordinates, reduce zoom level:
