@@ -64,7 +64,7 @@ const MAP = {
 
     MAP.mapObject = mapObject
   },
-  render: function (object) {
+  appendMountPoint: function () {
     const mountPoint = document.getElementById('map-plugin')
     if (mountPoint) {
       if (this.vueApp) {
@@ -75,7 +75,8 @@ const MAP = {
     const newMountPoint = document.createElement('div')
     newMountPoint.id = 'map-plugin'
     document.getElementById('main-content-bottom-slot').appendChild(newMountPoint)
-
+  },
+  render: function (object) {
     this.vueApp = this.createVueApp()
     this.vueApp.mount('#map-plugin')
 
@@ -99,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (data.pageType !== 'concept' || data.prefLabels === undefined || Object.keys(data.jsonLd).length === 0) {
       return
     }
+    MAP.appendMountPoint()
     const skosmosUriSpace = window.SKOSMOS.uriSpace
     const context = data.jsonLd['@context']
 
@@ -164,8 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // map variables
     MAP.mapObject = null
-    MAP.preferred_label = data.prefLabels[0].label
-
+    MAP.preferred_label = data.prefLabels.find(({ lang }) => lang === window.SKOSMOS.lang).label
     // render widget
     MAP.render()
   }
