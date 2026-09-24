@@ -14,9 +14,11 @@ const MAP = {
                 <div class="panel-group" id="mapAccordion" role="tablist" aria-multiselectable="true">
                   <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingMap">
-                      <button class="accordion-button accordion" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">
-                        <div>{{mapCaption}}</div>
-                      </button>
+                      <h2>
+                        <button class="accordion-button accordion" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">
+                          <div>{{mapCaption}}</div>
+                        </button>
+                      </h2>
                     </div>
                     <div id="collapseMap" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingMap">
                       <div class="panel-body">
@@ -37,7 +39,7 @@ const MAP = {
       getLang = 'en'
     }
     if (key === 'mapCaption') {
-      const pref = MAP.preferred_label
+      const pref = MAP.preferredLabel
       return {
         fi: pref + ' kartalla',
         sv: pref + ' på karta',
@@ -57,7 +59,7 @@ const MAP = {
     }).addTo(mapObject)
 
     L.marker(MAP.coordinates).addTo(mapObject)
-      .bindPopup("<div class='map-popup-label'>" + MAP.preferred_label + "</div><div class='map-popup-coordinates'>(" + MAP.coordinatesStr.join(', ') + ')</div>')
+      .bindPopup("<div class='map-popup-label'>" + MAP.preferredLabel + "</div><div class='map-popup-coordinates'>(" + MAP.coordinatesStr.join(', ') + ')</div>')
       .openPopup()
 
     L.control.scale({ imperial: false }).addTo(mapObject)
@@ -76,7 +78,7 @@ const MAP = {
     newMountPoint.id = 'map-plugin'
     document.getElementById('main-content-bottom-slot').appendChild(newMountPoint)
   },
-  render: function (object) {
+  render: function () {
     this.vueApp = this.createVueApp()
     this.vueApp.mount('#map-plugin')
 
@@ -166,8 +168,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // map variables
     MAP.mapObject = null
-    MAP.preferred_label = data.prefLabels.find(({ lang }) => lang === window.SKOSMOS.lang).label
-    // render widget
+    if (window.SKOSMOS.lang in data.prefLabels) {
+      MAP.preferredLabel = data.prefLabels.find(({ lang }) => lang === window.SKOSMOS.lang).label
+    }
+    else {
+      MAP.preferredLabel = data.prefLabels[0].label
+    }
     MAP.render()
   }
 })
