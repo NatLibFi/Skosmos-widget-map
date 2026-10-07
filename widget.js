@@ -14,7 +14,7 @@ const MAP = {
                 <div class="panel-group" id="mapAccordion" role="tablist" aria-multiselectable="true">
                   <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingMap">
-                      <h2>
+                      <h2 class="mb-0">
                         <button class="accordion-button accordion" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">
                           <div>{{mapCaption}}</div>
                         </button>
