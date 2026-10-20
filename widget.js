@@ -35,7 +35,7 @@ const MAP = {
   zoomLevel: 10,
   getTranslation: function (key) {
     let getLang = window.SKOSMOS.lang
-    if (getLang !== 'fi' && getLang !== 'sv') {
+    if (getLang !== 'fi' && getLang !== 'sv' && getLang !== 'se') {
       getLang = 'en'
     }
     if (key === 'mapCaption') {
@@ -43,7 +43,8 @@ const MAP = {
       return {
         fi: pref + ' kartalla',
         sv: pref + ' på karta',
-        en: pref + ' on map'
+        en: pref + ' on map',
+        se: pref + ' kárttas'
       }[getLang]
     } else {
       return ''
