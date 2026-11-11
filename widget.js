@@ -11,18 +11,29 @@ const MAP = {
         }
       },
       template: `
-                <div class="panel-group" id="mapAccordion" role="tablist" aria-multiselectable="true">
-                  <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingMap">
-                      <h2 class="mb-0">
-                        <button class="accordion-button accordion" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">
-                          <div>{{mapCaption}}</div>
-                        </button>
-                      </h2>
-                    </div>
-                    <div id="collapseMap" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingMap">
-                      <div class="panel-body">
-                        <div id="map" class="panel position-sticky" role="tabpanel" aria-labelledby="headingMapWidget"></div>
+                <div class="accordion" id="mapAccordion">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingMap">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseMap"
+                        aria-expanded="true"
+                        aria-controls="collapseMap"
+                      >
+                        {{ mapCaption }}
+                      </button>
+                    </h2>
+
+                    <div
+                      id="collapseMap"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingMap"
+                      data-bs-parent="#mapAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div id="map" class="position-sticky"></div>
                       </div>
                     </div>
                   </div>
@@ -171,8 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
     MAP.mapObject = null
     if (window.SKOSMOS.lang in data.prefLabels) {
       MAP.preferredLabel = data.prefLabels.find(({ lang }) => lang === window.SKOSMOS.lang).label
-    }
-    else {
+    } else {
       MAP.preferredLabel = data.prefLabels[0].label
     }
     MAP.render()

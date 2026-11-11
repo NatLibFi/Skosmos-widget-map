@@ -7,7 +7,7 @@
   background-color: var(--light-color)
 }
 
-#collapseMap > .panel-body {
+#collapseMap > .accordion-body {
     padding: 0;
     border-top: 0;
 }
@@ -28,7 +28,7 @@
     min-width: max-content;
 }
 
-#collapseMap > .panel-body > .btn:hover, #collapseMap > .panel-body > .btn:active, #collapseMap > .panel-body > .btn:focus {
+#collapseMap > .accordion-body > .btn:hover, #collapseMap > .accordion-body > .btn:active, #collapseMap > .accordion-body > .btn:focus {
     background-color: #fff;
 }
 
@@ -56,4 +56,5 @@
     font-size: 1.2rem;
     font-family: var(--font-family);
     color: var(--dark-color);
+    border-radius: 0;
 }
