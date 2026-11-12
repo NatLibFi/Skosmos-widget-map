@@ -4,7 +4,12 @@
 
 #mapAccordion {
   margin-top: 1rem;
-  background-color: var(--light-color)
+}
+
+#mapAccordion > .accordion-item {
+  background-color: var(--secondary-light-color);
+  border-radius: 0;
+  border: none;
 }
 
 #collapseMap > .accordion-body {
